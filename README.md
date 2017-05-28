@@ -77,7 +77,7 @@ coord_distance((lat1, lon1), (lat2, lon2); calcfunc=vincenty, radius=EARTH_RADIU
 
 Pass the lat/lon coordinates between two points to get the distance
 in meters between them. By default this is calculated using [Vincenty's formula](https://en.wikipedia.org/wiki/Vincenty's_formulae) using the
-Earth's equatorial radius (see [fixed radius](https://en.wikipedia.org/wiki/Earth_radius#Fixed_radius)). The
+Earth's equatorial radius (see: [fixed radius](https://en.wikipedia.org/wiki/Earth_radius#Fixed_radius)). The
 [Haversine](https://en.wikipedia.org/wiki/Haversine_formula) formula is
 also available.
 
@@ -88,12 +88,8 @@ Available distance calculations:
 
 Available radii:
 
-* EARTH_RADIUS_EQUATORIAL
-* EARTH_RADIUS_POLAR
-
-This package
-currently supports the Haversine (Great Distance) formula as well as EARTH_RADIUS_POLAR.
-
+* EARTH_RADIUS_EQUATORIAL (6378.1km)
+* EARTH_RADIUS_POLAR (6356.8km)
 
 # Example
 

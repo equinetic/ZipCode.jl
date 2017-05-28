@@ -15,8 +15,11 @@ Usage
 =====
 
   CoordinateDistance(latStart, longStart, latEnd, longEnd)
-  CoordinateDistance(latStart, longStart, latEnd, longEnd, calcfunc=Haversine)
+
+  CoordinateDistance(latStart, longStart, latEnd, longEnd, calcfunc=haversine)
+
   CoordinateDistance(latStart, longStart, latEnd, longEnd, radius=EARTH_RADIUS_POLAR)
+
   CoordinateDistance((latStart, longStart), (latEnd, longEnd))
 
 Arguments
@@ -35,17 +38,13 @@ Arguments
 
 - **`radius`** : Radius of the Earth. Defaults to EARTH_RADIUS_EQUATORIAL - about 6378.137KM.
   EARTH_RADIUS_POLAR is also available.
-
-Calculation Functions
-====================
-
 """
 function coord_distance(
           lat1::AbstractFloat,
           lon1::AbstractFloat,
           lat2::AbstractFloat,
           lon2::AbstractFloat;
-          calcfunc::Function=Vincenty,
+          calcfunc::Function=vincenty,
           radius::AbstractFloat=EARTH_RADIUS_EQUATORIAL)::AbstractFloat
   calcfunc(lat1, lon1, lat2, lon2, radius)
 end
@@ -53,7 +52,7 @@ end
 function coord_distance(
           coord1::Tuple{AbstractFloat,AbstractFloat},
           coord2::Tuple{AbstractFloat,AbstractFloat};
-          calcfunc::Function=Vincenty,
+          calcfunc::Function=vincenty,
           radius::AbstractFloat=EARTH_RADIUS_EQUATORIAL)::AbstractFloat
   coord_distance(coord1[1], coord1[2], coord2[1], coord2[2], calcfunc=calcfunc, radius=radius)
 end
