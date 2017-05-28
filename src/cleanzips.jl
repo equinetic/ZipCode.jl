@@ -16,7 +16,7 @@ const CLEANERS = [
   ZipCodeCleaner("Left Zeros", r"^[0-9]{1,4}$", x -> lpad(x, 5, "0"))
 ]
 
-function CleanZipCode!(cleaner::ZipCodeCleaner, Zip::ZipCodeStr)
+function cleanzipcode!(cleaner::ZipCodeCleaner, Zip::ZipCodeStr)
   Zip.val = ismatch(cleaner.pattern, Zip.val) ? cleaner.cleanfun(Zip.val) : Zip.val
 end
 
@@ -46,18 +46,18 @@ Usage
   CleanZipCode("notaZip", returnstring = true)
 
 """
-function CleanZipCode(Zip::String; returnstring = false)
+function cleanzipcode(Zip::String; returnstring = false)
   if ismatch(CLEAN, Zip)
     return Zip
   else
     Zip = ZipCodeStr(Zip)
     for c in CLEANERS
-      CleanZipCode!(c, Zip)
+      cleanzipcode!(c, Zip)
     end
     return ismatch(CLEAN, Zip.val) ? Zip.val : returnstring ? "NA" : NA
   end
 end
 
-function CleanZipCode(Zip::Any)
-  CleanZipCode(string.(Zip))
+function cleanzipcode(Zip::Any)
+  cleanzipcode(string.(Zip))
 end

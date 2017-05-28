@@ -40,7 +40,7 @@ Calculation Functions
 ====================
 
 """
-function CoordinateDistance(
+function coord_distance(
           lat1::AbstractFloat,
           lon1::AbstractFloat,
           lat2::AbstractFloat,
@@ -50,15 +50,15 @@ function CoordinateDistance(
   calcfunc(lat1, lon1, lat2, lon2, radius)
 end
 
-function CoordinateDistance(
+function coord_distance(
           coord1::Tuple{AbstractFloat,AbstractFloat},
           coord2::Tuple{AbstractFloat,AbstractFloat};
           calcfunc::Function=Vincenty,
           radius::AbstractFloat=EARTH_RADIUS_EQUATORIAL)::AbstractFloat
-  CoordinateDistance(coord1[1], coord1[2], coord2[1], coord2[2], calcfunc=calcfunc, radius=radius)
+  coord_distance(coord1[1], coord1[2], coord2[1], coord2[2], calcfunc=calcfunc, radius=radius)
 end
 
-function Haversine(
+function haversine(
           lat1::AbstractFloat,
           lon1::AbstractFloat,
           lat2::AbstractFloat,
@@ -76,7 +76,7 @@ function Haversine(
   return ang * radius
 end
 
-function Vincenty(
+function vincenty(
           lat1::AbstractFloat,
           lon1::AbstractFloat,
           lat2::AbstractFloat,

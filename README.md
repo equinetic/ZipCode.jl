@@ -14,14 +14,14 @@ Data is sourced from [CivicSpace US ZIP Code Database by Schuyler Erle, August 2
 Run the following command in the Julia REPL:
 
 ```Julia
-Pkg.clone("https://github.com/equinetic/ZipCode.jl")
+Pkg.add("ZipCode")
 using ZipCode
 ```
 
 
-# Features
+# Overview
 
-##### ZIPCODES Global Constant DataFrame
+## ZIPCODES Global Constant DataFrame
 
 `using ZipCode` will load a constant dataframe "ZIPCODES" into the global environment. This
 data set, compiled by CivicSpace Labs, Inc. (2004), contains 43,191 ZIP codes with the following
@@ -36,7 +36,27 @@ columns:
 
 Please see the disclaimer section at the bottom of this page for more information.
 
-##### Clean ZIP Codes
+## Filter & Extract Information
+
+This package resides on DataFrames.jl to manage and manipulate the data set. A helper
+function `roowcord` is provided to quickly extract a tuple of (latitude, longitude)
+coordinates from a single row.
+
+**Example**
+
+```julia
+# All Ohio ZIP codes
+oh_zips = ZIPCODES[ZIPCODES[:state] .== "OH", :]
+
+# Lat/long in a timezone
+tgt_zone = ZIPCODES[ZIPCODES[:timezone] .== -4, [:latitude, :longitude]]
+
+# Get (lat, long) tuples
+coords = [rowcoord(tgt_zone[i,:]) for i=1:nrow(tgt_zone)]
+```
+
+
+## Clean ZIP Codes
 
 Correct zip code for:
   * Leading zeros missing
@@ -44,21 +64,36 @@ Correct zip code for:
   * ZIP+4 suffix (99999-1234)
 
   ```julia
-  CleanZipCode(" 1234-9999")
+  cleanzipcode(" 1234-9999")
   ```
 
   `"01234"`
 
-##### Distance Calculations
+## Distance Calculations
 ```julia
-CoordinateDistance(lat1, lon1, lat2, lon2; calcfunc=Vincenty, radius=EARTH_RADIUS_EQUATORIAL)
+coord_distance(lat1, lon1, lat2, lon2; calcfunc=vincenty, radius=EARTH_RADIUS_EQUATORIAL)
+coord_distance((lat1, lon1), (lat2, lon2); calcfunc=vincenty, radius=EARTH_RADIUS_EQUATORIAL)
 ```
 
 Pass the lat/lon coordinates between two points to get the distance
-in meters between them. By default this is calculated using the Vincenty
-formula using the Earth's equatorial radius. You may change either of these
-by specifying the optional named parameters `calcfunc` and `radius`. This package
+in meters between them. By default this is calculated using [Vincenty's formula](https://en.wikipedia.org/wiki/Vincenty's_formulae) using the
+Earth's equatorial radius (see [fixed radius](https://en.wikipedia.org/wiki/Earth_radius#Fixed_radius)). The
+[Haversine](https://en.wikipedia.org/wiki/Haversine_formula) formula is
+also available.
+
+Available distance calculations:
+
+* haversine
+* vincenty
+
+Available radii:
+
+* EARTH_RADIUS_EQUATORIAL
+* EARTH_RADIUS_POLAR
+
+This package
 currently supports the Haversine (Great Distance) formula as well as EARTH_RADIUS_POLAR.
+
 
 # Example
 
@@ -69,16 +104,16 @@ using DataFramesMeta
 
 # Acquire ZIP Codes
 dirtyZIPs = ["609", 610, " 00748-1234"]
-branch_offices = CleanZipCode.(dirtyZIPs)
+branch_offices = cleanzipcode.(dirtyZIPs)
 headquarters = @where(ZIPCODES, :zip .== "00979")
 
 # Grab coordinates
-hq_coord = RowCoord(headquarters)
-branch_coords = [RowCoord(@where(ZIPCODES, :zip .== x)) for x in branch_offices]
+hq_coord = rowcoord(headquarters)
+branch_coords = [rowcoord(@where(ZIPCODES, :zip .== x)) for x in branch_offices]
 
 # Distance from HQ
 for i in eachindex(branch_offices)
-  dist = CoordinateDistance(hq_coord, branch_coords[i])/1000
+  dist = coord_distance(hq_coord, branch_coords[i])/1000
   println(branch_offices[i], " : ", @sprintf("%.1fkm", dist))
 end
 ```
