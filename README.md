@@ -1,26 +1,22 @@
-# ZipCodes.jl
+# ZipCode.jl
 
-[![Build Status](https://travis-ci.org/equinetic/ZipCodes.jl.svg?branch=master)](https://travis-ci.org/equinetic/ZipCodes.jl)
-
-[![Coverage Status](https://coveralls.io/repos/equinetic/ZipCodes.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/equinetic/ZipCodes.jl?branch=master)
-
-[![codecov.io](http://codecov.io/github/equinetic/ZipCodes.jl/coverage.svg?branch=master)](http://codecov.io/github/equinetic/ZipCodes.jl?branch=master)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE.md)
+[![Coverage Status](https://coveralls.io/repos/equinetic/ZipCode.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/equinetic/ZipCode.jl?branch=master)
 
 
+Package for accessing latitude/longitude by U.S. ZIP Code.
 
-Package for accessing latitude/longitude by U.S. ZIP Code. This is currently in development.
-
-ZipCodes.jl is inspired by Jeffrey Breen's [zipcode](https://cran.r-project.org/web/packages/zipcode/zipcode.pdf) R package.
+ZipCode.jl is inspired by Jeffrey Breen's [zipcode](https://cran.r-project.org/web/packages/zipcode/zipcode.pdf) R package.
 Data is sourced from [CivicSpace US ZIP Code Database by Schuyler Erle, August 2004.](https://boutell.com/zipcodes/)
 
 # Installation
 
-This package is not currently registered. To install it, run the following command
-in the Julia REPL:
+Run the following command in the Julia REPL:
 
 ```Julia
-Pkg.clone("https://github.com/equinetic/ZipCodes.jl")
-using ZipCodes
+Pkg.clone("https://github.com/equinetic/ZipCode.jl")
+using ZipCode
 ```
 
 
@@ -28,7 +24,7 @@ using ZipCodes
 
 ##### ZIPCODES Global Constant DataFrame
 
-`using ZipCodes` will load a constant dataframe "ZIPCODES" into the global environment. This
+`using ZipCode` will load a constant dataframe "ZIPCODES" into the global environment. This
 data set, compiled by CivicSpace Labs, Inc. (2004), contains 43,191 ZIP codes with the following
 columns:
 1. ***zip***
@@ -68,7 +64,7 @@ currently supports the Haversine (Great Distance) formula as well as EARTH_RADIU
 # Example
 
 ```julia
-using ZipCodes
+using ZipCode
 using DataFrames
 using DataFramesMeta
 

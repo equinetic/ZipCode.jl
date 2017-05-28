@@ -10,4 +10,7 @@ notifications:
 
 script:
  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
- - julia --check-bounds=yes -e 'Pkg.clone(pwd()); Pkg.build("ZipCodes"); Pkg.test("ZipCodes"; coverage=true)'
+ - julia --check-bounds=yes -e 'Pkg.clone(pwd()); Pkg.build("ZipCode"); Pkg.test("ZipCode"; coverage=true)'
+
+after_success:
+  - julia -e 'cd(Pkg.dir("ZipCode")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'

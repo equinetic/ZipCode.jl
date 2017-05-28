@@ -1,4 +1,4 @@
-using ZipCodes
+using ZipCode
 using DataFrames
 using Base.Test
 
