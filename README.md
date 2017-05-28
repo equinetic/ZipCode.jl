@@ -2,8 +2,7 @@
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE.md)
-[![Coverage Status](https://coveralls.io/repos/equinetic/ZipCode.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/equinetic/ZipCode.jl?branch=master)
-
+[![Coverage Status](https://coveralls.io/repos/github/equinetic/ZipCode.jl/badge.svg?branch=master)](https://coveralls.io/github/equinetic/ZipCode.jl?branch=master)
 
 Package for accessing latitude/longitude by U.S. ZIP Code.
 
