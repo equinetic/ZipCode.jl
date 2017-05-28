@@ -1,5 +1,5 @@
 # Mutable
-type ZipCode
+type ZipCodeStr
   val::String
 end
 
@@ -9,17 +9,16 @@ type ZipCodeCleaner
   cleanfun::Function
 end
 
-function CleanZipCode!(cleaner::ZipCodeCleaner, Zip::ZipCode)
-  Zip.val = ismatch(cleaner.pattern, Zip.val) ? cleaner.cleanfun(Zip.val) : Zip.val
-end
-
-
 const CLEAN= r"^[0-9]{5}$"
 const CLEANERS = [
   ZipCodeCleaner("Whitespace", r"[ ]*", x -> strip(x)),
   ZipCodeCleaner("Z+4 Suffix", r"-[0-9]{1,4}", x -> string(split(x,"-")[1])),
   ZipCodeCleaner("Left Zeros", r"^[0-9]{1,4}$", x -> lpad(x, 5, "0"))
 ]
+
+function CleanZipCode!(cleaner::ZipCodeCleaner, Zip::ZipCodeStr)
+  Zip.val = ismatch(cleaner.pattern, Zip.val) ? cleaner.cleanfun(Zip.val) : Zip.val
+end
 
 """
 `CleanZipCode(Zip; returnstring = false)`
@@ -51,7 +50,7 @@ function CleanZipCode(Zip::String; returnstring = false)
   if ismatch(CLEAN, Zip)
     return Zip
   else
-    Zip = ZipCode(Zip)
+    Zip = ZipCodeStr(Zip)
     for c in CLEANERS
       CleanZipCode!(c, Zip)
     end
