@@ -12,7 +12,7 @@ export  ZIPCODES,                     # Constant DataFrame
         EARTH_RADIUS_POLAR,           # Polar radius (meters)
         rowcoord                      # (lat, long) for dataframe row
 
-const ZIPCODES = readtable(joinpath(Pkg.dir(), "ZipCode/src/data/zipcode.csv"), eltypes=[String,String,String,Float64,Float64,Int64,Int64])
+const ZIPCODES = readtable(joinpath(dirname(@__FILE__), "data", "zipcode.csv"), eltypes=[String,String,String,Float64,Float64,Int64,Int64])
 
 include("./cleanzips.jl")
 include("./distance.jl")
