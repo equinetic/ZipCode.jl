@@ -2,7 +2,7 @@
 
 ### Docs/Integrity
 
-- [ ] Further inline documentation of functions, API
+- [x] Further inline documentation of functions, API
 - [ ] Readthedocs
 - [ ] Write tests for distance formulas
 - [ ] Add sources to README
@@ -19,6 +19,7 @@
 - [ ] Ability to return closest match(es) given lat/long coordinates
 - [ ] Ability to query via distance tolerance
 - [x] Make `cleanzipcode` more flexible
+- [ ] Add unit return type to distance calculations
 
 ### Long Term
 

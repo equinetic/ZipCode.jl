@@ -107,8 +107,13 @@ end
 
 
 """
-flatpythagorean
-
+`flatpythagorean(
+  lat1::AbstractFloat,
+  lon1::AbstractFloat,
+  lat2::AbstractFloat,
+  lon2::AbstractFloat,
+  radius::AbstractFloat
+)`
 """
 function flatpythagorean(
           lat1::AbstractFloat,
@@ -157,7 +162,8 @@ function vincenty(
           lat1::AbstractFloat,
           lon1::AbstractFloat,
           lat2::AbstractFloat,
-          lon2::AbstractFloat;
+          lon2::AbstractFloat,
+          radius::AbstractFloat=EARTH_RADIUS_EQUATORIAL;
           tol::AbstractFloat=1e-9,
           maxiter::Int=1000,
           verbose::Bool=true)::AbstractFloat
