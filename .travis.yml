@@ -1,3 +1,4 @@
+
 # Documentation: http://docs.travis-ci.com/user/languages/julia/
 language: julia
 os:
@@ -6,9 +7,9 @@ os:
 julia:
   - 0.5
   - nightly
-matrix:
- allow_failures:
-   - julia: nightly
+#matrix:
+#  allow_failures:
+#    - julia: nightly
 notifications:
   email: false
 # uncomment the following lines to override the default test script
