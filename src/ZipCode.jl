@@ -12,6 +12,7 @@ export  ZIPCODES,                     # Constant DataFrame
         coord_distance,               # Calculate distance between lat/lon
         haversine,                    # Haversine distance calculation
         vincenty,                     # Vincenty distance calculation
+        flatpythagorean,              # Flat Earth distance calculation
         EARTH_RADIUS_EQUATORIAL,      # Equatorial radius (meters)
         EARTH_RADIUS_POLAR,           # Polar radius (meters)
 

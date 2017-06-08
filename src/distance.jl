@@ -1,7 +1,3 @@
-# http://www.movable-type.co.uk/scripts/gis-faq-5.1.html
-# https://github.com/Turfjs/turf-vincenty-inverse/blob/master/index.js
-
-
 const EARTH_RADIUS_EQUATORIAL = 6378137.0
 const EARTH_RADIUS_POLAR = 6356752.3
 
@@ -12,8 +8,6 @@ Description
 ===========
 
 Calculates distance between (lat1, lon1) and (lat2, lon2).
-The provided `calcfunc` functions assume the earth is spherical
-and has a fixed radius.
 
 Usage
 =====
@@ -30,16 +24,11 @@ Arguments
 =========
 
 - **`lat1`** : Latitude of the first point. Must be a float.
-
 - **`lon1`** : Longitude of the first point. Must be a float.
-
 - **`lat2`** : Latitude of the second point. Must be a float.
-
 - **`lon2`** : Longitude of the second point. Must be a float.
-
 - **`calcfunc`** : Function that calculates distance between point 1 and 2. Defaults to
-  Vincenty. Haversine is also available.
-
+  Vincenty. Haversine and Flat Pythagorean is also available.
 - **`radius`** : Radius of the Earth. Defaults to EARTH_RADIUS_EQUATORIAL - about 6378.137KM.
   EARTH_RADIUS_POLAR is also available.
 """
@@ -62,13 +51,15 @@ function coord_distance(
 end
 
 """
-`haversine(
+```julia
+haversine(
   lat1::AbstractFloat,
   lon1::AbstractFloat,
   lat2::AbstractFloat,
   lon2::AbstractFloat,
   radius::AbstractFloat
-)`
+)
+```
 
 
 Haversine Formula for Great Circle Distance
@@ -107,13 +98,26 @@ end
 
 
 """
-`flatpythagorean(
+```julia
+flatpythagorean(
   lat1::AbstractFloat,
   lon1::AbstractFloat,
   lat2::AbstractFloat,
   lon2::AbstractFloat,
   radius::AbstractFloat
-)`
+)
+```
+
+Pythagorean Theorem for Coordinate Distance
+========================
+Utilizing Pythagorean's Theorem to calculate coordinate distance
+assumes that the Earth is flat. While erroneous, when the distance
+between the points is less than 20 kilometers the expected error
+for the majority of the United States will be less than 20 meters.
+Latitudes above 50 degrees (Alaska) will be less than 30 meters, and
+latitudes below 30 degrees (Southern US / Hawaii) will be less than
+9 meters.
+
 """
 function flatpythagorean(
           lat1::AbstractFloat,
@@ -135,7 +139,8 @@ end
 
 
 """
-`vincenty(
+```julia
+vincenty(
   lat1::AbstractFloat,
   lon1::AbstractFloat,
   lat2::AbstractFloat,
@@ -143,14 +148,15 @@ end
   tol::AbstractFloat=1e-9,
   maxiter::Int=1000,
   verbose::Bool=true
-)`
+)
+```
 
 Vincenty's Formula for Great Circle Distance
 ========================
 The Vincenty formula provides improved accuracy over the Haversine implementation
-at the expense of some added complexity. Unlike the Haversine formula, Vincenty's
-solution assumes the sphere is oblate (flattened) - a more appropriate shape for
-the Earth's actual curvature.
+at the expense of some added complexity and diminished computational performance.
+Unlike the Haversine formula, Vincenty's solution assumes the sphere is oblate (flattened)
+which is a more appropriate shape for the Earth's actual curvature.
 
 It is important to note that if the ratio of the distance between the points
 and Earth's radius becomes too large there will be an adverse loss of precision
@@ -196,9 +202,9 @@ function vincenty(
     sinσ = sqrt( (cos(u2)*sin(λ))^2 + (cos(u1)*sin(u2)-sin(u1)*cos(u2)*cos(λ))^2 )
     cosσ = sin(u1)*sin(u2) + cos(u1)*cos(u2)*cos(λ)
     σ = atan(sinσ/cosσ)
-    sinα = (cos(u1)*cos(u2)*sin(λ))/sin(σ)
+    sinα = (cos(u1)*cos(u2)*sin(λ))/sinσ
     cos2α = 1 - sinα^2
-    cos2σm = cos(σ) - (2*sin(u1)*sin(u2))/cos2α
+    cos2σm = cosσ - (2*sin(u1)*sin(u2))/cos2α
     C = ƒ/16 * cos2α*(4 + ƒ*(4-3cos2α))
 
     x1 = cos2σm + C*cosσ*(-1+2cos2σm^2)
@@ -219,7 +225,6 @@ function vincenty(
   x3 = cos2σm + .25B*(cosσ*(-1+2cos2σm^2))
   x4 = (1/6)*B*cos2σm*(-3+4sinσ^2)*(-3+4cos2σm^2)
   Δσ = B*sinσ*(x3-x4)
-  s = b*A*(σ-Δσ)
 
-  return s
+  return b*A*(σ - Δσ)
 end

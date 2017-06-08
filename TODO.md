@@ -5,20 +5,26 @@
 - [x] Further inline documentation of functions, API
 - [ ] Readthedocs
 - [ ] Write tests for distance formulas
-- [ ] Add sources to README
+- [x] Add sources to README
 
 ### General
 
-- [ ] Implement algorithms for more accurate distance calculations
+- [x] Implement algorithms for more accurate distance calculations
+
+    **>> vincenty iterative algorithm**
 - [ ] Create way for users to access expected error rate of distance calcs
-- [ ] Build out convenience functions for quicker/easier access of subsets and
+- [x] Build out convenience functions for quicker/easier access of subsets and
   relevant vector operations
+
+    **>> Ongoing, but made improvements**
 - [ ] Quicker way to run distance calcs on subsets. Maybe something like:
   `distance(zipcodeA, zipcodeB)`
 
 - [ ] Ability to return closest match(es) given lat/long coordinates
 - [ ] Ability to query via distance tolerance
 - [x] Make `cleanzipcode` more flexible
+
+    **>> Converted cleaning routines into optional, standalone functions**
 - [ ] Add unit return type to distance calculations
 
 ### Long Term
