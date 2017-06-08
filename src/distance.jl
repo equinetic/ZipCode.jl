@@ -145,9 +145,9 @@ vincenty(
   lon1::AbstractFloat,
   lat2::AbstractFloat,
   lon2::AbstractFloat;
-  tol::AbstractFloat=1e-9,
-  maxiter::Int=1000,
-  verbose::Bool=true
+  tol::AbstractFloat=1e-12,     # Error tolerance
+  maxiter::Int=1000,            # Maximum iterations before convergence
+  verbose::Bool=true            # Print out warnings
 )
 ```
 
@@ -170,7 +170,7 @@ function vincenty(
           lat2::AbstractFloat,
           lon2::AbstractFloat,
           radius::AbstractFloat=EARTH_RADIUS_EQUATORIAL;
-          tol::AbstractFloat=1e-9,
+          tol::AbstractFloat=1e-12,
           maxiter::Int=1000,
           verbose::Bool=true)::AbstractFloat
   lat1 = deg2rad(lat1)
