@@ -1,5 +1,3 @@
-const CLEANZIPPATTERN= r"^[0-9]{5}$"
-
 # Mutable
 "Mutable type for temporarily holding a ZIP code string in `val`"
 type ZipCodeStr
@@ -94,7 +92,7 @@ function cleanzipcode(
             returnNA::Bool=true,        # Return unrecognized values as NA
             enforcestring::Bool=false   # Ensure return type is a String
           )::Union{AbstractString, DataArrays.NAtype}
-  if ismatch(CLEANZIPPATTERN, Zip)
+  if ismatch(PATTERN_ZIPCODE, Zip)
     return Zip
   else
     # Clean routine
@@ -104,7 +102,7 @@ function cleanzipcode(
     if padzeros cleanzipcode!(Zip, padleftzeros()) end
 
     # Return routine
-    if ismatch(CLEANZIPPATTERN, Zip.val)
+    if ismatch(PATTERN_ZIPCODE, Zip.val)
       return Zip.val
     else
       return returnNA ? enforcestring ? "NA" : NA : Zip.val

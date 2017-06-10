@@ -4,3 +4,14 @@
 @test cleanzipcode(" 1234-9999") == "01234"
 @test isna(cleanzipcode("a"))
 @test cleanzipcode("a", enforcestring = true) == "NA"
+
+cleaner1 = removewhitespace()
+cleaner2 = removezipsuffix()
+cleaner3 = padleftzeros()
+
+@test ismatch(cleaner1.pattern, " 01234 ")
+@test cleaner1.cleanfun(" 01234 ") == "01234"
+@test ismatch(cleaner2.pattern, "01234-9999")
+@test cleaner2.cleanfun("01234-9999") == "01234"
+@test ismatch(cleaner3.pattern, "1234")
+@test cleaner3.cleanfun("1234") == "01234"

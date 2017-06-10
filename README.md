@@ -41,7 +41,7 @@ Please see the disclaimer section at the bottom of this page for more informatio
 
 This package resides on DataFrames.jl to manage and manipulate the data set. A helper
 function `roowcord` is provided to quickly extract a tuple of (latitude, longitude)
-coordinates from a single row.
+coordinates from the ZIPCODES dataframe.
 
 **Example**
 
@@ -49,8 +49,8 @@ coordinates from a single row.
 # All Ohio ZIP codes
 oh_zips = ZIPCODES[ZIPCODES[:state] .== "OH", :]
 
-# Lat/long in a timezone
-tgt_zone = ZIPCODES[ZIPCODES[:timezone] .== -4, [:latitude, :longitude]]
+# Target time zone
+tgt_zone = ZIPCODES[ZIPCODES[:timezone] .== -4, :]
 
 # Get vector of (lat, long) tuples
 coords = rowcoord(tgt_zone)
@@ -137,7 +137,7 @@ end
 
 # Sources
 
-* Primary Data Set: https://boutell.com/zipcodes/
+* ZIP code data set: https://boutell.com/zipcodes/
 
 * Distance calculations: http://www.movable-type.co.uk/scripts/gis-faq-5.1.html
 
