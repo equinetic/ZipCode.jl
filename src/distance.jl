@@ -197,7 +197,7 @@ function vincenty(
   δ = 1.
   n = 0
 
-  while δ > tol || n < maxiter
+  while δ > tol && n < maxiter
     n += 1
     sinσ = sqrt( (cos(u2)*sin(λ))^2 + (cos(u1)*sin(u2)-sin(u1)*cos(u2)*cos(λ))^2 )
     cosσ = sin(u1)*sin(u2) + cos(u1)*cos(u2)*cos(λ)
