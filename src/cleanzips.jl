@@ -111,6 +111,17 @@ function cleanzipcode(
   end
 end
 
-function cleanzipcode(Zip::Any)
-  cleanzipcode(string.(Zip))
+function cleanzipcode(Zip::Any;
+            whitespace::Bool=true,      # Remove leading/trailing whitespace
+            suffix::Bool=true,          # Remove "Z-{4}" suffix
+            padzeros::Bool=true,        # Pad left zeros
+            returnNA::Bool=true,        # Return unrecognized values as NA
+            enforcestring::Bool=false   # Ensure return type is a String)
+          )
+  cleanzipcode(string.(Zip),
+              whitespace=whitespace,
+              suffix=suffix,
+              padzeros=padzeros,
+              returnNA=returnNA,
+              enforcestring=enforcestring)
 end

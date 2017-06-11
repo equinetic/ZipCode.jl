@@ -84,12 +84,12 @@ Examples:
 
 ## Distance Calculations
 ```julia
-coord_distance(lat1, lon1, lat2, lon2; calcfunc=vincenty, radius=EARTH_RADIUS_EQUATORIAL)
-coord_distance((lat1, lon1), (lat2, lon2); calcfunc=vincenty, radius=EARTH_RADIUS_EQUATORIAL)
+coord_distance(lat1, lon1, lat2, lon2; calcfunc=vincenty)
+coord_distance((lat1, lon1), (lat2, lon2); calcfunc=vincenty)
 ```
 
-Pass the lat/lon coordinates between two points to get the distance
-in meters between them. By default this is calculated using Vincenty's formula. A default parameter is specified for the Earth's radius and is set to the equatorial radius. The polar radius is also available (see constants below). It is not necessary to adjust this parameter when using the default Vincenty algorithm as both the equatorial and polar radii are inherently built into it.
+Pass the latitude/longitude coordinates between two points to get the distance
+in meters between them. By default this is calculated using Vincenty's formula. This algorithm represents Earth as an oblong sphere given the equatorial and polar radius. The other provided distance calculations (such as `haversine`) take the equatorial radius as their default parameter, which can be adjusted via the named parameter `radius`.
 
 Further reading:
 * [Earth fixed radius](https://en.wikipedia.org/wiki/Earth_radius#Fixed_radius)

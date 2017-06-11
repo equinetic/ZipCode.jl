@@ -144,7 +144,9 @@ vincenty(
   lat1::AbstractFloat,
   lon1::AbstractFloat,
   lat2::AbstractFloat,
-  lon2::AbstractFloat;
+  lon2::AbstractFloat
+  radiusA::AbstractFloat=EARTH_RADIUS_EQUATORIAL;
+  radiusB::AbstractFloat=EARTH_RADIUS_POLAR,
   tol::AbstractFloat=1e-12,     # Error tolerance
   maxiter::Int=1000,            # Maximum iterations before convergence
   verbose::Bool=true            # Print out warnings
@@ -169,7 +171,8 @@ function vincenty(
           lon1::AbstractFloat,
           lat2::AbstractFloat,
           lon2::AbstractFloat,
-          radius::AbstractFloat=EARTH_RADIUS_EQUATORIAL;
+          radiusA::AbstractFloat=EARTH_RADIUS_EQUATORIAL;
+          radiusB::AbstractFloat=EARTH_RADIUS_POLAR,
           tol::AbstractFloat=1e-12,
           maxiter::Int=1000,
           verbose::Bool=true)::AbstractFloat
@@ -178,8 +181,8 @@ function vincenty(
   lat2 = deg2rad(lat2)
   lon2 = deg2rad(lon2)
 
-  a = EARTH_RADIUS_EQUATORIAL
-  b = EARTH_RADIUS_POLAR
+  a = radiusA
+  b = radiusB
   ƒ = (a - b) / a
   b = (1 - ƒ)*a
 

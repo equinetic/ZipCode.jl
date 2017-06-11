@@ -6,7 +6,7 @@
 - [ ] Readthedocs
 - [ ] Write tests for distance formulas
 - [x] Add sources to README
-- [ ] Better test coverage
+- [x] Better test coverage
 
 ### General
 

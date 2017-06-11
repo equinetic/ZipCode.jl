@@ -5,6 +5,9 @@
 @test isna(cleanzipcode("a"))
 @test cleanzipcode("a", enforcestring = true) == "NA"
 
+@test cleanzipcode(1234) == "01234"
+@test cleanzipcode(0123456789, returnNA=false) == "123456789"
+
 cleaner1 = removewhitespace()
 cleaner2 = removezipsuffix()
 cleaner3 = padleftzeros()
