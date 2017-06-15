@@ -64,23 +64,20 @@ Correct a zip code for:
   * Additional whitespace
   * ZIP+4 suffix (99999-1234)
 
-For vector operations it is recommended to use dot syntax: `cleanzipcode.(zips)`
-
 Examples:
   ```julia
   cleanzipcode(" 1234-9999")
+  # > "01234"
   cleanzipcode("01234-9999", returnNA=false)
+  # > "01234-9999"
   cleanzipcode("not a zip")
+  # > NA
   cleanzipcode("not a zip", enforcestring=true)
+  # > "NA"
+  cleanzipcode([1234, "6123-9999", "abcd"])
+  # > ["01234", "06123", NA]
   ```
 
-  `"01234"`
-
-  `"01234-9999"`
-
-  `NA`
-
-  `"NA"`
 
 ## Distance Calculations
 ```julia

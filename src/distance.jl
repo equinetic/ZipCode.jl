@@ -71,7 +71,7 @@ straight distance between two points on a unit sphere; that is to say
 It is important to note that if the ratio of the distance between the points
 and Earth's radius becomes too large there will be an adverse loss of precision
 due to a floating point error. This issue arises between antipodal coordinates
-(opposite sides of the globe) and thus is not a major concern for calculations
+(opposite sides of the globe) and thus is not a concern for calculations
 within the U.S.
 
 """
@@ -163,7 +163,7 @@ which is a more appropriate shape for the Earth's actual curvature.
 It is important to note that if the ratio of the distance between the points
 and Earth's radius becomes too large there will be an adverse loss of precision
 due to a floating point error. This issue arises between antipodal coordinates
-(opposite sides of the globe) and thus is not a major concern for calculations
+(opposite sides of the globe) and thus is not a concern for calculations
 within the U.S.
 """
 function vincenty(

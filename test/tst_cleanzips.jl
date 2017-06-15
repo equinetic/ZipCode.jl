@@ -8,6 +8,9 @@
 @test cleanzipcode(1234) == "01234"
 @test cleanzipcode(0123456789, returnNA=false) == "123456789"
 
+zipvec1 = ["1234", 1234, "1234-1234"]
+@test cleanzipcode(zipvec1, enforcestring=true) == ["01234", "01234", "01234"]
+
 cleaner1 = removewhitespace()
 cleaner2 = removezipsuffix()
 cleaner3 = padleftzeros()

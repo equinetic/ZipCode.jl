@@ -1,3 +1,5 @@
+typealias StringNA Union{AbstractString, DataArrays.NAtype}
+
 # Mutable
 "Mutable type for temporarily holding a ZIP code string in `val`"
 type ZipCodeStr
@@ -91,7 +93,7 @@ function cleanzipcode(
             padzeros::Bool=true,        # Pad left zeros
             returnNA::Bool=true,        # Return unrecognized values as NA
             enforcestring::Bool=false   # Ensure return type is a String
-          )::Union{AbstractString, DataArrays.NAtype}
+          )::StringNA
   if ismatch(PATTERN_ZIPCODE, Zip)
     return Zip
   else
@@ -111,17 +113,10 @@ function cleanzipcode(
   end
 end
 
-function cleanzipcode(Zip::Any;
-            whitespace::Bool=true,      # Remove leading/trailing whitespace
-            suffix::Bool=true,          # Remove "Z-{4}" suffix
-            padzeros::Bool=true,        # Pad left zeros
-            returnNA::Bool=true,        # Return unrecognized values as NA
-            enforcestring::Bool=false   # Ensure return type is a String)
-          )
-  cleanzipcode(string.(Zip),
-              whitespace=whitespace,
-              suffix=suffix,
-              padzeros=padzeros,
-              returnNA=returnNA,
-              enforcestring=enforcestring)
+function cleanzipcode(Zip::Any; args...)::StringNA
+  cleanzipcode(string.(Zip); args...)
+end
+
+function cleanzipcode(Zip::AbstractVector; args...)::Vector{StringNA}
+  [cleanzipcode(x) for x in Zip]
 end
