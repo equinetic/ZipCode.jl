@@ -62,7 +62,7 @@ CleanZipCode(
     suffix::Bool=true,          # Remove "Z-{4}" suffix
     padzeros::Bool=true,        # Pad left zeros
     returnNA::Bool=true,        # Return unrecognized values as NA
-    enforcestring::Bool=false   # Ensure return type is a String
+    enforcestring::Bool=false   # Ensure return values are Strings
 )
 ```
 

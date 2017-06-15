@@ -59,12 +59,23 @@ coords = rowcoord(tgt_zone)
 
 ## Clean ZIP Codes
 
-Correct a zip code for:
+```julia
+CleanZipCode(
+    Zip::AbstractString;
+    whitespace::Bool=true,      # Remove leading/trailing whitespace
+    suffix::Bool=true,          # Remove "Z-{4}" suffix
+    padzeros::Bool=true,        # Pad left zeros
+    returnNA::Bool=true,        # Return unrecognized values as NA
+    enforcestring::Bool=false   # Ensure return values are Strings
+)
+```
+
+Correct a ZIP code for:
   * Leading zeros missing
   * Additional whitespace
   * ZIP+4 suffix (99999-1234)
 
-Examples:
+**Examples:**
   ```julia
   cleanzipcode(" 1234-9999")
   # > "01234"
