@@ -38,16 +38,20 @@ function coord_distance(
           lat2::AbstractFloat,
           lon2::AbstractFloat;
           calcfunc::Function=vincenty,
-          radius::AbstractFloat=EARTH_RADIUS_EQUATORIAL)::AbstractFloat
-  calcfunc(lat1, lon1, lat2, lon2, radius)
+          radius::AbstractFloat=EARTH_RADIUS_EQUATORIAL,
+          retunit::Unitful.FreeUnits=u"m",
+          rettype::Type=AbstractFloat)
+  v = calcfunc(lat1, lon1, lat2, lon2, radius)
+  retunit !== u"m" ? dist_convert(v, retunit, rettype) : v
 end
 
 function coord_distance(
-          coord1::Tuple{AbstractFloat,AbstractFloat},
-          coord2::Tuple{AbstractFloat,AbstractFloat};
+          coord1::Coordinate,
+          coord2::Coordinate;
           calcfunc::Function=vincenty,
-          radius::AbstractFloat=EARTH_RADIUS_EQUATORIAL)::AbstractFloat
-  coord_distance(coord1[1], coord1[2], coord2[1], coord2[2], calcfunc=calcfunc, radius=radius)
+          radius::AbstractFloat=EARTH_RADIUS_EQUATORIAL)
+  v = coord_distance(coord1[1], coord1[2], coord2[1], coord2[2], calcfunc=calcfunc, radius=radius)
+  retunit !== u"m" ? dist_convert(v, retunit, rettype) : v
 end
 
 """
@@ -197,7 +201,7 @@ function vincenty(
 
   λ = copy(L)
   λ2 = λ
-  δ = 1.
+  δ = 1. + tol
   n = 0
 
   while δ > tol && n < maxiter

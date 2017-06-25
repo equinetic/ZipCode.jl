@@ -60,7 +60,7 @@ coords = rowcoord(tgt_zone)
 ## Clean ZIP Codes
 
 ```julia
-CleanZipCode(
+cleanzipcode(
     Zip::AbstractString;
     whitespace::Bool=true,      # Remove leading/trailing whitespace
     suffix::Bool=true,          # Remove "Z-{4}" suffix
@@ -79,7 +79,7 @@ Correct a ZIP code for:
   ```julia
   cleanzipcode(" 1234-9999")
   # > "01234"
-  cleanzipcode("01234-9999", returnNA=false)
+  cleanzipcode("01234-9999", suffix=false, returnNA=false)
   # > "01234-9999"
   cleanzipcode("not a zip")
   # > NA
@@ -94,10 +94,23 @@ Correct a ZIP code for:
 ```julia
 coord_distance(lat1, lon1, lat2, lon2; calcfunc=vincenty)
 coord_distance((lat1, lon1), (lat2, lon2); calcfunc=vincenty)
+
+#= All keyword arguments
+calcfunc::Function=vincenty,
+  -> vincenty, haversine, or flatpythagorean
+radius::AbstractFloat=EARTH_RADIUS_EQUATORIAL,
+  -> equatorial or polar
+retunit::Unitful.FreeUnits=u"m",
+  -> a unit type from Unitful.jl
+     e.g. u"km", u"mi"
+rettype::Type=AbstractFloat
+  -> return type when converting from the default u"m"
+     e.g. Rational{Int64}, Float64
+=#
 ```
 
 Pass the latitude/longitude coordinates between two points to get the distance
-in meters between them. By default this is calculated using Vincenty's formula. This algorithm represents Earth as an oblong sphere given the equatorial and polar radius. The other provided distance calculations (such as `haversine`) take the equatorial radius as their default parameter, which can be adjusted via the named parameter `radius`.
+in meters between them. By default this is calculated using Vincenty's formula. This algorithm represents Earth as an oblong sphere given the equatorial and polar radius. The other provided distance calculations (such as `haversine`) take the equatorial radius as their default parameter, which can be adjusted via the keyword argument `radius`.
 
 Further reading:
 * [Earth fixed radius](https://en.wikipedia.org/wiki/Earth_radius#Fixed_radius)
@@ -132,9 +145,9 @@ headquarters = @where(ZIPCODES, :zip .== "00979")
 hq_coord = rowcoord(headquarters)
 branch_coords = [rowcoord(@where(ZIPCODES, :zip .== x)) for x in branch_offices]
 
-# Distance from HQ
+# Distance from HQ in kilometers
 for i in eachindex(branch_offices)
-  dist = coord_distance(hq_coord, branch_coords[i])/1000
+  dist = coord_distance(hq_coord, branch_coords[i], retunit=u"km")
   println(branch_offices[i], " : ", @sprintf("%.1fkm", dist))
 end
 ```

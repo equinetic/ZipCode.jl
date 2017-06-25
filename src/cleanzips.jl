@@ -1,14 +1,10 @@
-typealias StringNA Union{AbstractString, DataArrays.NAtype}
-
-# Mutable
-"Mutable type for temporarily holding a ZIP code string in `val`"
-type ZipCodeStr
+mutable struct ZipCodeStr
   val::AbstractString
 end
 
 """
 ```julia
-type ZipCodeCleaner
+mutable struct ZipCodeCleaner
   name::AbstractString
   pattern::Regex
   cleanfun::Function
@@ -19,7 +15,7 @@ Holds a textual identifier for clarity purposes, a regex
 pattern to match a potential ZIP code to, and a function to
 apply when a match is found.
 """
-type ZipCodeCleaner
+struct ZipCodeCleaner
   name::AbstractString
   pattern::Regex
   cleanfun::Function
@@ -56,7 +52,7 @@ end
 
 """
 ```julia
-CleanZipCode(
+cleanzipcode(
     Zip::AbstractString;
     whitespace::Bool=true,      # Remove leading/trailing whitespace
     suffix::Bool=true,          # Remove "Z-{4}" suffix

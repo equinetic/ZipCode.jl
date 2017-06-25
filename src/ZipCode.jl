@@ -1,6 +1,7 @@
 module ZipCode
 
-using   DataFrames
+using   DataFrames,
+        Unitful
 
 export  ZIPCODES,                     # Constant DataFrame
 
@@ -16,12 +17,17 @@ export  ZIPCODES,                     # Constant DataFrame
         EARTH_RADIUS_EQUATORIAL,      # Equatorial radius (meters)
         EARTH_RADIUS_POLAR,           # Polar radius (meters)
 
-        rowcoord                      # (lat, long) for dataframe row
+        rowcoord,                     # (lat, long) for dataframe row
+        @distancesearch
 
 const ZIPCODES = readtable(joinpath(dirname(@__FILE__), "data", "zipcode.csv"), eltypes=[String,String,String,Float64,Float64,Int64,Int64])
 const PATTERN_ZIPCODE= r"^[0-9]{5}$"
 # const PATTERN_CITY = r"^[A-Za-z]{3,}"
 # const PATTERN_STATE = r"^[A-Z]{2}"
+
+# Type unions
+const StringNA = Union{AbstractString, DataArrays.NAtype}
+const Coordinate = Tuple{AbstractFloat, AbstractFloat}
 
 include("./cleanzips.jl")
 include("./distance.jl")
