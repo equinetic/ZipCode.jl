@@ -16,9 +16,3 @@
 - [x] Make `cleanzipcode` more flexible
 - [x] Add unit return type to distance calculations
 - [x] 0.6
-
-### Canceled / Postponed
-- [ ] Distance searches
-  - **Postponing until there's a clear need and approach**
-  - [ ] Convenience function for subsets `distance(zipA, zipB)`
-  - ~~[ ] Closest matches given (lat, long), city, zip, etc. `findmatch(zip="1234", tolerance=50, returnclosest=5)`~~ **This would essentially overlap the existing function of Query.jl, DataFramesMeta.jl, etc.**
