@@ -39,10 +39,10 @@ function coord_distance(
           lon2::AbstractFloat;
           calcfunc::Function=vincenty,
           radius::AbstractFloat=EARTH_RADIUS_EQUATORIAL,
-          retunit::Unitful.FreeUnits=u"m",
-          rettype::Type=AbstractFloat)
+          units::Unitful.FreeUnits=u"m",
+          returntype::Type=AbstractFloat)
   v = calcfunc(lat1, lon1, lat2, lon2, radius)
-  retunit !== u"m" ? dist_convert(v, retunit, rettype) : v
+  units !== u"m" ? dist_convert(v, units, returntype) : v
 end
 
 function coord_distance(

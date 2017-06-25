@@ -100,10 +100,10 @@ calcfunc::Function=vincenty,
   -> vincenty, haversine, or flatpythagorean
 radius::AbstractFloat=EARTH_RADIUS_EQUATORIAL,
   -> equatorial or polar
-retunit::Unitful.FreeUnits=u"m",
+units::Unitful.FreeUnits=u"m",
   -> a unit type from Unitful.jl
      e.g. u"km", u"mi"
-rettype::Type=AbstractFloat
+returntype::Type=AbstractFloat
   -> return type when converting from the default u"m"
      e.g. Rational{Int64}, Float64
 =#
