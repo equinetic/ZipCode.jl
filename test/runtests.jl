@@ -1,5 +1,5 @@
 using ZipCode
-using DataFrames
+using DataFrames, Unitful
 using Base.Test
 
 include("tst_zipcode.jl")
