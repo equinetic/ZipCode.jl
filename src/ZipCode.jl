@@ -20,7 +20,8 @@ export  ZIPCODES,                     # Constant DataFrame
         rowcoord,                     # (lat, long) for dataframe row
         @distancesearch
 
-const ZIPCODES = readtable(joinpath(dirname(@__FILE__), "data", "zipcode.csv"), eltypes=[String,String,String,Float64,Float64,Int64,Int64])
+const ZIPCODES = readtable(joinpath(dirname(@__FILE__), "data", "zipcode.csv"),
+        eltypes=[String,String,String,Float64,Float64,Int64,Int64])
 const PATTERN_ZIPCODE= r"^[0-9]{5}$"
 # const PATTERN_CITY = r"^[A-Za-z]{3,}"
 # const PATTERN_STATE = r"^[A-Z]{2}"

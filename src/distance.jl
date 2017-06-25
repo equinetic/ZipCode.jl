@@ -48,10 +48,8 @@ end
 function coord_distance(
           coord1::Coordinate,
           coord2::Coordinate;
-          calcfunc::Function=vincenty,
-          radius::AbstractFloat=EARTH_RADIUS_EQUATORIAL)
-  v = coord_distance(coord1[1], coord1[2], coord2[1], coord2[2], calcfunc=calcfunc, radius=radius)
-  retunit !== u"m" ? dist_convert(v, retunit, rettype) : v
+          args...)
+  v = coord_distance(coord1[1], coord1[2], coord2[1], coord2[2]; args...)
 end
 
 """
