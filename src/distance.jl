@@ -42,6 +42,7 @@ function coord_distance(
           units::Unitful.FreeUnits=u"m",
           returntype::Type=AbstractFloat, args...)
   v = calcfunc(lat1, lon1, lat2, lon2, radius; args...)
+  v = isnan(v) ? 0. : v
   units !== u"m" ? dist_convert(v, units, returntype) : v
 end
 
