@@ -94,19 +94,6 @@ Correct a ZIP code for:
 ```julia
 coord_distance(lat1, lon1, lat2, lon2; calcfunc=vincenty)
 coord_distance((lat1, lon1), (lat2, lon2); calcfunc=vincenty)
-
-#= All keyword arguments
-calcfunc::Function=vincenty,
-  -> vincenty, haversine, or flatpythagorean
-radius::AbstractFloat=EARTH_RADIUS_EQUATORIAL,
-  -> equatorial or polar
-units::Unitful.FreeUnits=u"m",
-  -> a unit type from Unitful.jl
-     e.g. u"km", u"mi"
-returntype::Type=AbstractFloat
-  -> return type when converting from the default u"m"
-     e.g. Rational{Int64}, Float64
-=#
 ```
 
 Pass the latitude/longitude coordinates between two points to get the distance
@@ -129,6 +116,18 @@ Available radii constants:
 * EARTH_RADIUS_EQUATORIAL (6378.1km)
 * EARTH_RADIUS_POLAR (6356.8km)
 
+
+List of keyword arguments:
+
+* `calcfunc::Function=vincenty`
+  - vincenty, haversine, or flatpythagorean
+* `radius::AbstractFloat=EARTH_RADIUS_EQUATORIAL`
+  - equatorial or polar
+* `units::Unitful.FreeUnits=u"m"`
+  - a unit type from Unitful.jl. *e.g.* u"km", u"mi"
+* `returntype::Type=AbstractFloat`
+  - return type when converting from the default u"m". *e.g.* Rational{Int64}, Float64
+
 # Example
 
 ```julia
@@ -147,7 +146,7 @@ branch_coords = [rowcoord(@where(ZIPCODES, :zip .== x)) for x in branch_offices]
 
 # Distance from HQ in kilometers
 for i in eachindex(branch_offices)
-  dist = coord_distance(hq_coord, branch_coords[i], retunit=u"km")
+  dist = coord_distance(hq_coord, branch_coords[i], units=u"km")
   println(branch_offices[i], " : ", @sprintf("%.1fkm", dist))
 end
 ```
