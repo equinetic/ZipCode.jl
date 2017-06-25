@@ -17,8 +17,7 @@ export  ZIPCODES,                     # Constant DataFrame
         EARTH_RADIUS_EQUATORIAL,      # Equatorial radius (meters)
         EARTH_RADIUS_POLAR,           # Polar radius (meters)
 
-        rowcoord,                     # (lat, long) for dataframe row
-        @distancesearch
+        rowcoord                      # (lat, long) for dataframe row
 
 const ZIPCODES = readtable(joinpath(dirname(@__FILE__), "data", "zipcode.csv"),
         eltypes=[String,String,String,Float64,Float64,Int64,Int64])

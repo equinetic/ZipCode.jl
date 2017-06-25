@@ -40,8 +40,8 @@ function coord_distance(
           calcfunc::Function=vincenty,
           radius::AbstractFloat=EARTH_RADIUS_EQUATORIAL,
           units::Unitful.FreeUnits=u"m",
-          returntype::Type=AbstractFloat)
-  v = calcfunc(lat1, lon1, lat2, lon2, radius)
+          returntype::Type=AbstractFloat, args...)
+  v = calcfunc(lat1, lon1, lat2, lon2, radius; args...)
   units !== u"m" ? dist_convert(v, units, returntype) : v
 end
 
@@ -69,20 +69,13 @@ Haversine Formula for Great Circle Distance
 The Haversine formula presides on spherical trigonometry to calculate
 straight distance between two points on a unit sphere; that is to say
 "how the crow flies" across a perfect sphere.
-
-It is important to note that if the ratio of the distance between the points
-and Earth's radius becomes too large there will be an adverse loss of precision
-due to a floating point error. This issue arises between antipodal coordinates
-(opposite sides of the globe) and thus is not a concern for calculations
-within the U.S.
-
 """
 function haversine(
           lat1::AbstractFloat,
           lon1::AbstractFloat,
           lat2::AbstractFloat,
           lon2::AbstractFloat,
-          radius::AbstractFloat)::AbstractFloat
+          radius::AbstractFloat; args...)::AbstractFloat
   lat1 = deg2rad(lat1)
   lon1 = deg2rad(lon1)
   lat2 = deg2rad(lat2)
@@ -126,7 +119,7 @@ function flatpythagorean(
           lon1::AbstractFloat,
           lat2::AbstractFloat,
           lon2::AbstractFloat,
-          radius::AbstractFloat)::AbstractFloat
+          radius::AbstractFloat; args...)::AbstractFloat
   lat1 = deg2rad(lat1)
   lon1 = deg2rad(lon1)
   lat2 = deg2rad(lat2)
@@ -161,12 +154,6 @@ The Vincenty formula provides improved accuracy over the Haversine implementatio
 at the expense of some added complexity and diminished computational performance.
 Unlike the Haversine formula, Vincenty's solution assumes the sphere is oblate (flattened)
 which is a more appropriate shape for the Earth's actual curvature.
-
-It is important to note that if the ratio of the distance between the points
-and Earth's radius becomes too large there will be an adverse loss of precision
-due to a floating point error. This issue arises between antipodal coordinates
-(opposite sides of the globe) and thus is not a concern for calculations
-within the U.S.
 """
 function vincenty(
           lat1::AbstractFloat,
@@ -177,7 +164,7 @@ function vincenty(
           radiusB::AbstractFloat=EARTH_RADIUS_POLAR,
           tol::AbstractFloat=1e-12,
           maxiter::Int=1000,
-          verbose::Bool=true)::AbstractFloat
+          verbose::Bool=true, args...)::AbstractFloat
   lat1 = deg2rad(lat1)
   lon1 = deg2rad(lon1)
   lat2 = deg2rad(lat2)
