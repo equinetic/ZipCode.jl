@@ -1,7 +1,7 @@
 using ZipCode
 using DataFrames, Unitful
-using Base.Test
+using Test
 
-include("tst_cleanzips.jl")
-include("tst_distance.jl")
-include("tst_utils.jl")
+@testset "cleanzipcode" begin include("tst_cleanzips.jl") end
+@testset "distance"     begin include("tst_distance.jl") end
+@testset "utils"        begin include("tst_utils.jl") end
