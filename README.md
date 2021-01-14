@@ -2,13 +2,14 @@
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE.md)
-[![Coverage Status](https://coveralls.io/repos/github/equinetic/ZipCode.jl/badge.svg?branch=master)](https://coveralls.io/github/equinetic/ZipCode.jl?branch=master)
-[![Build Status](https://travis-ci.org/equinetic/ZipCode.jl.svg?branch=master)](https://travis-ci.org/equinetic/ZipCode.jl)
+[![Build Status](https://github.com/ScottPJones/ZipCode.jl/workflows/CI/badge.svg)](https://github.com/ScottPJones/ZipCode.jl/actions)
 
 Package for accessing latitude/longitude by U.S. ZIP Code.
 
 ZipCode.jl is inspired by Jeffrey Breen's [zipcode](https://cran.r-project.org/web/packages/zipcode/zipcode.pdf) R package.
 Data is sourced from [CivicSpace US ZIP Code Database by Schuyler Erle, August 2004.](https://boutell.com/zipcodes/)
+
+[Updated it for Julia v1.5 and above]
 
 # Installation
 
@@ -65,8 +66,8 @@ cleanzipcode(
     whitespace::Bool=true,      # Remove leading/trailing whitespace
     suffix::Bool=true,          # Remove "Z-{4}" suffix
     padzeros::Bool=true,        # Pad left zeros
-    returnNA::Bool=true,        # Return unrecognized values as NA
-    enforcestring::Bool=false   # Ensure return values are Strings
+    returnNA::Bool=true,        # Return unrecognized values as missing
+    enforcestring::Bool=false   # Ensure return values are Strings ("NA" or original string)
 )
 ```
 
@@ -82,11 +83,11 @@ Correct a ZIP code for:
   cleanzipcode("01234-9999", suffix=false, returnNA=false)
   # > "01234-9999"
   cleanzipcode("not a zip")
-  # > NA
+  # > missing
   cleanzipcode("not a zip", enforcestring=true)
   # > "NA"
   cleanzipcode([1234, "6123-9999", "abcd"])
-  # > ["01234", "06123", NA]
+  # > ["01234", "06123", missing]
   ```
 
 

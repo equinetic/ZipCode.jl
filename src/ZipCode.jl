@@ -1,7 +1,13 @@
+"""
+ZipCode package
+
+Copyright 2017 Matthew Amos, portions copyright 2021 Gandalf Software, Inc., Scott P. Jones
+
+Licensed under MIT License, see LICENSE
+"""
 module ZipCode
 
-using   DataFrames,
-        Unitful
+using CSV, DataFrames, Unitful
 
 export  ZIPCODES,                     # Constant DataFrame
 
@@ -19,18 +25,18 @@ export  ZIPCODES,                     # Constant DataFrame
 
         rowcoord                      # (lat, long) for dataframe row
 
-const ZIPCODES = readtable(joinpath(dirname(@__FILE__), "data", "zipcode.csv"),
-        eltypes=[String,String,String,Float64,Float64,Int64,Int64])
+const ZIPCODES = CSV.File(joinpath(dirname(@__FILE__), "..", "data", "zipcode.csv")) |> DataFrame
+
 const PATTERN_ZIPCODE= r"^[0-9]{5}$"
 # const PATTERN_CITY = r"^[A-Za-z]{3,}"
 # const PATTERN_STATE = r"^[A-Z]{2}"
 
 # Type unions
-const StringNA = Union{AbstractString, DataArrays.NAtype}
-const Coordinate = Tuple{AbstractFloat, AbstractFloat}
+const StringNA = Union{String, Missing}
+const Coordinate = Tuple{Float64, Float64}
 
-include("./cleanzips.jl")
-include("./distance.jl")
-include("./utils.jl")
+include("cleanzips.jl")
+include("distance.jl")
+include("utils.jl")
 
 end
